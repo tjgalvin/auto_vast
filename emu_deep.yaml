@@ -1,0 +1,190 @@
+version: 0.2
+defaults:
+  wsclean:
+    save_source_list: true
+    temp_dir: $MEMDIR
+    abs_mem: 200
+    local_rms_window: 50
+    size: 6192
+    local_rms: true
+    force_mask_rounds: 4
+    auto_mask: 10
+    auto_threshold: 0.75
+    threshold: null
+    channels_out: 36
+    mgain: 0.9
+    nmiter: 10
+    niter: 60000
+    multiscale: true
+    multiscale_scale_bias: 0.75
+    multiscale_scales: !!python/tuple
+    - 0
+    - 4
+    - 8
+    - 16
+    - 24
+    - 32
+    - 48
+    - 64
+    - 92
+    - 128
+    - 196
+    fit_spectral_pol: 4
+    weight: briggs -0
+    data_column: CORRECTED_DATA
+    scale: 2.25asec
+    gridder: wgridder
+    nwlayers: null
+    wgridder_accuracy: 0.0001
+    join_channels: true
+    minuv_l: 50
+    minuvw_m: null
+    maxw: null
+    no_update_model_required: false
+    no_small_inversion: false
+    beam_fitting_size: 1.25
+    fits_mask: null
+    deconvolution_channels: 12
+    parallel_gridding: 136
+    pol: i
+  gaincal:
+    solint: 60s
+    calmode: p
+    round: 0
+    minsnr: 0.0
+    uvrange: '>235m'
+    selectdata: true
+    gaintype: G
+    nspw: 1
+  masking:
+    base_snr_clip: 4
+    flood_fill: true
+    flood_fill_positive_seed_clip: 6
+    flood_fill_positive_flood_clip: 1.25
+    flood_fill_use_mac_adaptive_max_depth: 4
+    flood_fill_use_mac_adaptive_skew_delta: 0.05
+    flood_fill_use_mac_adaptive_step_factor: 4
+    beam_shape_erode: true
+    beam_shape_erode_minimum_response: 0.7
+    grow_low_snr_island: false
+    grow_low_snr_island_clip: 1.75
+    grow_low_snr_island_size: 12046
+  archive:
+    tar_file_re_patterns: !!python/tuple
+    - .*round4.*MFS.*(image|residual|model)\.fits
+    - .*linmos.*
+    - .*weight\.fits
+    - .*yaml
+    - .*\.txt
+    - .*png
+    - .*beam[0-9]+\.ms\.(zip|tar)
+    - .*beam[0-9]+\.ms
+    - .*\.caltable
+    - .*\.tar
+    - .*\.csv
+    - .*comp\.fits
+    copy_file_re_patterns: !!python/tuple
+    - .*\.i\..*linmos.*fits
+    - .*\.i\..*weight\.fits
+    - .*png
+    - .*csv
+    - .*caltable\.tar
+    - .*txt
+    - .*comp\.fits
+    - .*yaml
+  bane:
+    cores: 7
+selfcal:
+  0:
+    wsclean: 
+      auto_mask: 6
+      auto_threshold: 3
+      multiscale_scale_bias: 0.8
+      multiscale: false
+      niter: 5000000
+      local_rms: true
+      local_rms_window: 600
+  1:
+    wsclean:
+      auto_mask: null
+      auto_threshold: 4
+      force_mask_rounds: null
+      local_rms_window: 500
+      local_rms: true
+      niter: 5000000
+    gaincal:
+      solint: 600s
+      calmode: p
+      uvrange: '>400m'
+      nspw: 1
+    masking:
+      flood_fill_use_mac: true
+      flood_fill_positive_seed_clip: 1.03
+      flood_fill_positive_flood_clip: 0.8
+      flood_fill_use_mac_box_size: 600
+  2:
+    wsclean:
+      auto_mask: null
+      auto_threshold: 2
+      force_mask_rounds: null
+      local_rms: true
+      local_rms_window: 500
+    gaincal:
+      solint: 30s
+      calmode: p
+      uvrange: '>400m'
+      nspw: 4
+    masking:
+      flood_fill_use_mac: true
+      flood_fill_positive_seed_clip: 1.05
+      flood_fill_positive_flood_clip: 0.75
+      flood_fill_use_mac_box_size: 600
+  3:
+    wsclean:
+      auto_mask: null
+      auto_threshold: 2
+      force_mask_rounds: null
+      local_rms: false
+      local_rms_window: null
+      niter: 160000
+      nmiter: 15
+      multiscale_scale_bias: 0.8
+    gaincal:
+      solint: 480s
+      calmode: ap
+      uvrange: '>400m'
+      nspw: 1
+    masking:
+      flood_fill_use_mac: true
+      flood_fill_positive_seed_clip: 1.0125
+      flood_fill_positive_flood_clip: 0.65
+      flood_fill_use_mac_box_size: 400
+  4:
+    wsclean:
+      auto_mask: null
+      auto_threshold: 1.2
+      force_mask_rounds: null 
+      local_rms: false
+      local_rms_window: null
+      niter: 160000
+      nmiter: 15
+      weight: briggs 0.0
+      multiscale_scale_bias: 0.8
+    gaincal:
+      solint: 480s
+      calmode: ap
+      uvrange: '>400m'
+      nspw: 1
+    masking:
+      flood_fill_use_mac: true
+      flood_fill_positive_seed_clip: 1.0125
+      flood_fill_positive_flood_clip: 0.5
+      flood_fill_use_mac_box_size: 50
+      flood_fill_use_mac_adaptive_max_depth: 2
+
+stokesv:
+  wsclean:
+    pol: v
+    no_update_model_required: true
+    nmiter: 3
+    save_source_list: false
