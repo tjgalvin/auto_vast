@@ -5,7 +5,7 @@ defaults:
     temp_dir: $MEMDIR
     abs_mem: 200
     local_rms_window: 50
-    size: 6192
+    size: 6892
     local_rms: true
     force_mask_rounds: 4
     auto_mask: 10
@@ -14,7 +14,7 @@ defaults:
     channels_out: 36
     mgain: 0.9
     nmiter: 10
-    niter: 60000
+    niter: 100000
     multiscale: true
     multiscale_scale_bias: 0.75
     multiscale_scales: !!python/tuple
@@ -119,7 +119,7 @@ selfcal:
       nspw: 1
     masking:
       flood_fill_use_mac: true
-      flood_fill_positive_seed_clip: 1.03
+      flood_fill_positive_seed_clip: 1.025
       flood_fill_positive_flood_clip: 0.8
       flood_fill_use_mac_box_size: 600
   2:
@@ -136,7 +136,7 @@ selfcal:
       nspw: 4
     masking:
       flood_fill_use_mac: true
-      flood_fill_positive_seed_clip: 1.05
+      flood_fill_positive_seed_clip: 1.025
       flood_fill_positive_flood_clip: 0.75
       flood_fill_use_mac_box_size: 600
   3:
@@ -158,7 +158,7 @@ selfcal:
       flood_fill_use_mac: true
       flood_fill_positive_seed_clip: 1.0125
       flood_fill_positive_flood_clip: 0.65
-      flood_fill_use_mac_box_size: 400
+      flood_fill_use_mac_box_size: 200
   4:
     wsclean:
       auto_mask: null
