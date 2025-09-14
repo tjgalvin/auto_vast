@@ -4,7 +4,7 @@ defaults:
     save_source_list: true
     temp_dir: $MEMDIR
     abs_mem: 200
-    local_rms_window: 50
+    local_rms_window: 500
     size: 6892
     local_rms: true
     force_mask_rounds: 4
@@ -45,7 +45,7 @@ defaults:
     beam_fitting_size: 1.25
     fits_mask: null
     deconvolution_channels: 12
-    parallel_gridding: 136
+    parallel_gridding: 18
     pol: i
   gaincal:
     solint: 60s
@@ -188,3 +188,26 @@ stokesv:
     no_update_model_required: true
     nmiter: 3
     save_source_list: false
+subtractcube:
+  #fitscube:
+  #  max_workers: 8
+  #  invalidate_zeros: true
+  #  bounding_box: true
+  wsclean:
+    pol: 'i'
+    no_update_model_required: true
+    join_channels: false
+    auto_mask: 7
+    auto_threshold: 2
+    niter: 10000
+    force_mask_rounds: 2
+    fit_spectral_pol: null
+    deconvolution_channels: null
+    channels_out: 1
+    multiscale: false
+    save_source_list: false
+    flint_no_log_wsclean_output: true
+    size: 2048
+    nmiter: 1
+    scale: 7.5asec
+

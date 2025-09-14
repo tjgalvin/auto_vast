@@ -6,7 +6,7 @@
 #SBATCH --mem=7GB
 #SBATCH --time=1-23:00:00
 #SBATCH -A OD-207757
-#SBATCH --array=1-50%5
+#SBATCH --array=1-4%2
 
 #set -e
 set -x
@@ -99,7 +99,18 @@ flint_flow_continuum_pipeline \
 	--cli-config "cli_config.config" 
 
 
-rm -r "$(pwd)/${SBIDNUM}"
+WSCLEAN=/scratch3/projects/spiceracs/containers/wsclean_force_mask.sif
+YANDA=/scratch3/gal16b/containers/yanda/yandasoft_development_20240819.sif
+flint_flow_subtract_cube_pipeline \
+	"$(pwd)/${SBIDNUM}" \
+        "${WSCLEAN}" \
+        "${YANDA}" \
+        --holofile "${HOLO}" \
+        --cli-config "cli_config_timestep.config"
+
+
+
+#rm -r "$(pwd)/${SBIDNUM}"
 rm casa* *last
 rm -r "${PREFECT_HOME}"
 rm -r "${SBIDDIR}"
