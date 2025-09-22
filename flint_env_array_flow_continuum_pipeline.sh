@@ -6,7 +6,7 @@
 #SBATCH --mem=7GB
 #SBATCH --time=1-23:00:00
 #SBATCH -A OD-207757
-#SBATCH --array=1-4%2
+#SBATCH --array=1-45%6
 
 #set -e
 set -x
@@ -109,8 +109,10 @@ flint_flow_subtract_cube_pipeline \
         --cli-config "cli_config_timestep.config"
 
 
+cp -v "${pwd}/${SBIDNUM}/*cube.fits" "archive_copies/${SBIDNUM}/"
 
-#rm -r "$(pwd)/${SBIDNUM}"
+
+rm -r "$(pwd)/${SBIDNUM}"
 rm casa* *last
 rm -r "${PREFECT_HOME}"
 rm -r "${SBIDDIR}"
