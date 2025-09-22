@@ -109,7 +109,7 @@ flint_flow_subtract_cube_pipeline \
         --cli-config "cli_config_timestep.config"
 
 
-cp -v "${pwd}/${SBIDNUM}/*cube.fits" "archive_copies/${SBIDNUM}/"
+cp -v "$(pwd)/${SBIDNUM}/*cube.fits" "archive_copies/${SBIDNUM}/"
 
 
 rm -r "$(pwd)/${SBIDNUM}"
