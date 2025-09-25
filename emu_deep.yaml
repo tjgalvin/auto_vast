@@ -5,7 +5,7 @@ defaults:
     temp_dir: $MEMDIR/$FLINT_UUID
     abs_mem: 200
     local_rms_window: 500
-    size: 6892
+    size: 6192
     local_rms: true
     force_mask_rounds: 4
     auto_mask: 10
