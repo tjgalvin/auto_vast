@@ -3,9 +3,9 @@ cluster_class: "dask_jobqueue.SLURMCluster"
 cluster_kwargs:
     cores: 2
     processes: 1
-    job_cpu: 2
+    job_cpu: 3
     name: 'flint-worker'
-    memory: "16GB"
+    memory: "24GB"
     account: 'OD-207757'
     #queue: 'workq'
     walltime: '0-24:00:00'
@@ -23,4 +23,4 @@ cluster_kwargs:
     silence_logs: 'info'
 adapt_kwargs:
     minimum: 1
-    maximum: 1024
+    maximum: 128

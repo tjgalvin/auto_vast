@@ -3,10 +3,11 @@
 #SBATCH --export=NONE
 #SBATCH --ntasks-per-node=1
 #SBATCH --ntasks=1
-#SBATCH --mem=7GB
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=32GB
 #SBATCH --time=1-23:00:00
 #SBATCH -A OD-207757
-#SBATCH --array=1-45%2
+#SBATCH --array=1-7%2
 
 #set -e
 set -x
@@ -100,6 +101,7 @@ flint_flow_continuum_pipeline \
 
 
 WSCLEAN=/scratch3/projects/spiceracs/containers/wsclean_force_mask.sif
+WSCLEAN=/scratch3/gal16b/wsclean_scales.sif
 YANDA=/scratch3/gal16b/containers/yanda/yandasoft_development_20240819.sif
 flint_flow_subtract_cube_pipeline \
 	"$(pwd)/${SBIDNUM}" \
@@ -109,10 +111,10 @@ flint_flow_subtract_cube_pipeline \
         --cli-config "cli_config_timestep.config"
 
 
-cp -v "$(pwd)/${SBIDNUM}/"*cube*fits "archive_copies/${SBIDNUM}/"
+mv -v "$(pwd)/${SBIDNUM}/"*contsub*cube*fits "archive_copies/${SBIDNUM}/"
 
 
 rm -r "$(pwd)/${SBIDNUM}"
 rm casa* *last
 rm -r "${PREFECT_HOME}"
-rm -r "${SBIDDIR}"
+#rm -r "${SBIDDIR}"
