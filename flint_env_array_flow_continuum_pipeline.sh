@@ -7,7 +7,7 @@
 #SBATCH --mem=32GB
 #SBATCH --time=1-23:00:00
 #SBATCH -A OD-207757
-#SBATCH --array=1-7%2
+#SBATCH --array=1-2%1
 
 #set -e
 set -x
@@ -112,7 +112,7 @@ flint_flow_subtract_cube_pipeline \
 
 
 mv -v "$(pwd)/${SBIDNUM}/"*contsub*cube*fits "archive_copies/${SBIDNUM}/"
-
+mv -v "$(pwd)/${SBIDNUM}/"*ms "archive_copies/${SBIDNUM}/"
 
 rm -r "$(pwd)/${SBIDNUM}"
 rm casa* *last
