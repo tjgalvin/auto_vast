@@ -7,7 +7,7 @@
 #SBATCH --mem=32GB
 #SBATCH --time=1-23:00:00
 #SBATCH -A OD-207757
-#SBATCH --array=1-2%1
+#SBATCH --array=1-1%1
 
 #set -e
 set -x
@@ -49,7 +49,7 @@ fi
 if [ -d "archive_copies/$SBIDNUM" ]
 then
 	echo "$SBIDNUM already exists"
-	exit 0
+#	exit 0
 else
 	echo "archive_copies/$SBIDNUM does not exist so will be runing"
 fi
@@ -93,11 +93,11 @@ SLEEP=$((RANDOM % 1))
 echo "Will wait for ${SLEEP}"
 sleep "${SLEEP}"
 
-flint_flow_continuum_pipeline \
-	"${SBIDDIR}" \
-	--holofile "${HOLO}" \
-	--split-path $(pwd) \
-	--cli-config "cli_config.config" 
+#flint_flow_continuum_pipeline \
+#	"${SBIDDIR}" \
+#	--holofile "${HOLO}" \
+#	--split-path $(pwd) \
+#	--cli-config "cli_config.config" 
 
 
 WSCLEAN=/scratch3/projects/spiceracs/containers/wsclean_force_mask.sif
@@ -111,10 +111,10 @@ flint_flow_subtract_cube_pipeline \
         --cli-config "cli_config_timestep.config"
 
 
-mv -v "$(pwd)/${SBIDNUM}/"*contsub*cube*fits "archive_copies/${SBIDNUM}/"
+#mv -v "$(pwd)/${SBIDNUM}/"*contsub*cube*fits "archive_copies/${SBIDNUM}/"
 mv -v "$(pwd)/${SBIDNUM}/"*ms "archive_copies/${SBIDNUM}/"
 
-rm -r "$(pwd)/${SBIDNUM}"
+#rm -r "$(pwd)/${SBIDNUM}"
 rm casa* *last
 rm -r "${PREFECT_HOME}"
 #rm -r "${SBIDDIR}"
