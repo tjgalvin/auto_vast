@@ -23,6 +23,9 @@ export PREFECT_HOME="${WORKDIR}/prefect"
 export PREFECT_LOGGING_EXTRA_LOGGERS="flint,fixms"
 export PREFECT_LOGGING_LEVEL="INFO"
 export PREFECT_RESULTS_PERSIST_BY_DEFAULT=true
+export PREFECT_API_REQUEST_TIMEOUT=120
+export PREFECT_CLIENT_MAX_RETRIES=8
+export PREFECT_LOGGING_TO_API_BATCH_INTERVAL=10
 
 #echo "Sourcing home"
 #source /home/$(whoami)/.bashrc

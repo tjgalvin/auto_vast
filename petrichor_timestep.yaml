@@ -1,11 +1,11 @@
 # Set up for Petrichor
 cluster_class: "dask_jobqueue.SLURMCluster"
 cluster_kwargs:
-    cores: 6
+    cores: 10
     processes: 1
-    job_cpu: 6
+    job_cpu: 10
     name: 'flint-worker'
-    memory: "48GB"
+    memory: "80GB"
     account: 'OD-207757'
     #queue: 'workq'
     walltime: '0-24:00:00'
@@ -23,4 +23,4 @@ cluster_kwargs:
     silence_logs: 'info'
 adapt_kwargs:
     minimum: 1
-    maximum: 1124
+    maximum: 1424
