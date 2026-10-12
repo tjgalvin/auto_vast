@@ -4,9 +4,9 @@ cluster_kwargs:
     cores: 1
     processes: 1
     job_cpu: 30
-    name: 'flint-worker'
-    memory: "240GB"
-    account: 'OD-207757'
+    name: 'flint-avast-worker'
+    memory: "120GB"
+    account: 'OD-241659'
     #queue: 'workq'
     walltime: '0-24:00:00'
     job_extra_directives: 
@@ -16,7 +16,7 @@ cluster_kwargs:
     interface: "ib0"
     log_directory: 'flint_logs'
     job_script_prologue: 
-        - 'module load apptainer/1.3.3'
+        - 'module load apptainer'
         - 'unset APPTAINER_BINDPATH'
         - 'unset SINGULARITY_BINDPATH'
         - "export OMP_NUM_THREADS=${SLURM_CPUS_ON_NODE}"
