@@ -96,22 +96,23 @@ SLEEP=$((RANDOM % 1))
 echo "Will wait for ${SLEEP}"
 sleep "${SLEEP}"
 
-#flint_flow_continuum_pipeline \
-#	"${SBIDDIR}" \
-#	--holofile "${HOLO}" \
-#	--split-path $(pwd) \
-#	--cli-config "cli_config.config" 
+flint_flow_continuum_pipeline \
+	"${SBIDDIR}" \
+	--holofile "${HOLO}" \
+	--split-path $(pwd) \
+	--cli-config "cli_config.config" 
 
 
-WSCLEAN=/scratch3/projects/spiceracs/containers/wsclean_force_mask.sif
-WSCLEAN=/scratch3/gal16b/wsclean_scales.sif
-YANDA=/scratch3/gal16b/containers/yanda/yandasoft_development_20240819.sif
-flint_flow_subtract_cube_pipeline \
-	"$(pwd)/${SBIDNUM}" \
-        "${WSCLEAN}" \
-        "${YANDA}" \
-        --holofile "${HOLO}" \
-        --cli-config "cli_config_timestep.config"
+### Will need access to these copies of these prior to uncommenting/testing
+# WSCLEAN=/scratch3/projects/spiceracs/containers/wsclean_force_mask.sif
+# WSCLEAN=/scratch3/gal16b/wsclean_scales.sif
+# YANDA=/scratch3/gal16b/containers/yanda/yandasoft_development_20240819.sif
+# flint_flow_subtract_cube_pipeline \
+# 	"$(pwd)/${SBIDNUM}" \
+#         "${WSCLEAN}" \
+#         "${YANDA}" \
+#         --holofile "${HOLO}" \
+#         --cli-config "cli_config_timestep.config"
 
 
 #mv -v "$(pwd)/${SBIDNUM}/"*contsub*cube*fits "archive_copies/${SBIDNUM}/"
