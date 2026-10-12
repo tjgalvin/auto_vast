@@ -3,9 +3,9 @@ defaults:
   wsclean:
     save_source_list: true
     temp_dir: $MEMDIR/$FLINT_UUID
-    abs_mem: 200
+    abs_mem: 100
     local_rms_window: 500
-    size: 6192
+    size: 4096
     local_rms: true
     force_mask_rounds: 4
     auto_mask: 10
@@ -14,7 +14,7 @@ defaults:
     channels_out: 18
     mgain: 0.9
     nmiter: 10
-    niter: 100000
+    niter: 1000
     multiscale: true
     multiscale_scale_bias: 0.75
     multiscale_scales: !!python/tuple
