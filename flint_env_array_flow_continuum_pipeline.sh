@@ -1,12 +1,12 @@
 #!/bin/bash -l
-#SBATCH --job-name=flint
+#SBATCH --job-name=flint_avast
 #SBATCH --export=NONE
 #SBATCH --ntasks-per-node=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32GB
 #SBATCH --time=1-23:00:00
-#SBATCH -A OD-207757
+#SBATCH -A OD-241659
 #SBATCH --array=1-1%1
 
 #set -e
@@ -16,7 +16,7 @@ set -x
 export OMP_NUM_THREADS=1
 
 export APIURL=http://146.118.68.63:4200/api
-export APIURL=http://jones.it.csiro.au:4200/api
+export APIURL=http://tones.it.csiro.au:4200/api
 export PREFECT_API_URL="${APIURL}"
 export WORKDIR=$(pwd)
 export PREFECT_HOME="${WORKDIR}/prefect"
@@ -66,8 +66,8 @@ then
 
     # Download the data
     vis_download \
-        --username drtimgalvin@gmail.com \
-	--max-workers 4 \
+        --username kros9503@uni.sydney.edu.au \
+	--max-workers 12 \
 	--output-dir "$SBIDDIR" \
 	--extract-tar \
 	--download-holography \
