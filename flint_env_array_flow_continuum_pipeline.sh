@@ -8,6 +8,7 @@
 #SBATCH --time=1-23:00:00
 #SBATCH -A OD-241659
 #SBATCH --array=1-1%1
+#SBATCH -p io
 
 #set -e
 set -x
