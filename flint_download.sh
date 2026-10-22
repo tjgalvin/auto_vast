@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=flint_download
+#SBATCH --job-name=flint_avast_download
 #SBATCH --export=NONE
 #SBATCH --ntasks-per-node=1
 #SBATCH --ntasks=1
@@ -9,7 +9,7 @@
 #SBATCH -A OD-241659
 #SBATCH --array=1-1%1
 #SBATCH --partition=io
-#SBATCH --output=flint_download-%A_%a.out
+#SBATCH --output=flint_avast_download-%A_%a.out
 
 set -eo pipefail
 ENV=${1:?Usage: sbatch flint_download.sh CONDA_ENV}

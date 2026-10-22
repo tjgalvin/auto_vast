@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=flint_compute
+#SBATCH --job-name=flint_avast_process
 #SBATCH --export=NONE
 #SBATCH --ntasks-per-node=1
 #SBATCH --ntasks=1
@@ -8,11 +8,11 @@
 #SBATCH --time=1-23:00:00
 #SBATCH -A OD-241659
 #SBATCH --array=1-1%1
-#SBATCH --output=flint_compute-%A_%a.out
+#SBATCH --output=flint_avast_process-%A_%a.out
 
 # No partition specified: use the cluster's default compute partition.
 set -eo pipefail
-ENV=${1:?Usage: sbatch flint_compute.sh CONDA_ENV}
+ENV=${1:?Usage: sbatch flint_process.sh CONDA_ENV}
 cd "${SLURM_SUBMIT_DIR:?Submit from your shared working directory}"
 export OMP_NUM_THREADS=1
 export APIURL=http://tones.it.csiro.au:4200/api
