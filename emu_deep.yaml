@@ -7,7 +7,7 @@ defaults:
     local_rms_window: 500
     size: 4096
     local_rms: true
-    force_mask_rounds: 4
+    #force_mask_rounds: 4
     auto_mask: 10
     auto_threshold: 0.75
     threshold: null
@@ -108,7 +108,7 @@ selfcal:
     wsclean:
       auto_mask: null
       auto_threshold: 4
-      force_mask_rounds: null
+      #force_mask_rounds: null
       local_rms_window: 500
       local_rms: true
       niter: 150000
@@ -126,7 +126,7 @@ selfcal:
     wsclean:
       auto_mask: null
       auto_threshold: 2
-      force_mask_rounds: null
+      #force_mask_rounds: null
       local_rms: true
       local_rms_window: 500
     gaincal:
@@ -143,7 +143,7 @@ selfcal:
     wsclean:
       auto_mask: null
       auto_threshold: 2
-      force_mask_rounds: null
+      #force_mask_rounds: null
       local_rms: false
       local_rms_window: null
       niter: 160000
@@ -163,7 +163,7 @@ selfcal:
     wsclean:
       auto_mask: null
       auto_threshold: 1.5
-      force_mask_rounds: null 
+      #force_mask_rounds: null 
       local_rms: false
       local_rms_window: null
       niter: 160000
@@ -199,7 +199,7 @@ subtractcube:
     auto_mask: 7
     auto_threshold: 2
     niter: 10000
-    force_mask_rounds: null
+    #force_mask_rounds: null
     fit_spectral_pol: null
     deconvolution_channels: null
     channels_out: 1
