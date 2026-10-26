@@ -24,6 +24,7 @@ if compute_id=$(sbatch --parsable \
     --array="$ARRAY" \
     --dependency="aftercorr:$download_id" \
     "$SCRIPT_DIR/flint_process.sh" "$ENV"); then
+    "$SCRIPT_DIR/flint_process_subtract.sh" "$ENV"; then
     echo "Submitted compute array: ${compute_id%%;*} (waiting for matching downloads)"
 else
     echo "Compute submission failed; download array $download_id remains submitted." >&2
