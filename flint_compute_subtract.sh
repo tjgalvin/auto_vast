@@ -48,10 +48,10 @@ if [[ -z "$HOLO" || "$HOLO" == *$'\n'* || ! -f "$HOLO" ]]; then
     exit 1
 fi
 
-# Container paths from the original subtraction block.
+# Container paths 
 # Alternative WSCLEAN: /scratch3/projects/spiceracs/containers/wsclean_force_mask.sif
-WSCLEAN=/scratch3/gal16b/wsclean_scales.sif
-YANDA=/scratch3/gal16b/containers/yanda/yandasoft_development_20240819.sif
+WSCLEAN=/scratch3/ros314/containers/wsclean_scales.sif
+YANDA=/scratch3/ros314/containers/flint-containers_askapsoft.sif
 for required in "$WSCLEAN" "$YANDA" cli_config_timestep.config; do
     if [[ ! -r "$required" ]]; then
         echo "Required subtraction input is not readable: $required" >&2
