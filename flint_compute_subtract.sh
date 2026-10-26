@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=flint_compute_subtract
+#SBATCH --job-name=flint_avast_process_subtract
 #SBATCH --export=NONE
 #SBATCH --ntasks-per-node=1
 #SBATCH --ntasks=1
@@ -8,7 +8,7 @@
 #SBATCH --time=1-23:00:00
 #SBATCH -A OD-241659
 #SBATCH --array=1-1%1
-#SBATCH --output=flint_compute_subtract-%A_%a.out
+#SBATCH --output=flint_avast_process_subtract-%A_%a.out
 
 # No partition specified: use the cluster's default compute partition.
 set -eo pipefail
