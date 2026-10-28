@@ -50,7 +50,8 @@ fi
 
 # Container paths 
 # Alternative WSCLEAN: /scratch3/projects/spiceracs/containers/wsclean_force_mask.sif
-WSCLEAN=/scratch3/ros314/containers/wsclean_scales.sif
+#WSCLEAN=/scratch3/ros314/containers/wsclean_scales.sif
+WSCLEAN=/scratch3/ros314/containers/wsclean-znver3-wsclean-speedups-2a3fea68.sif
 YANDA=/scratch3/ros314/containers/flint-containers_askapsoft.sif
 for required in "$WSCLEAN" "$YANDA" cli_config_timestep.config; do
     if [[ ! -r "$required" ]]; then
