@@ -107,7 +107,7 @@ selfcal:
   1:
     wsclean:
       auto_mask: null
-      auto_threshold: 4
+      auto_threshold: 2
       #force_mask_rounds: null
       local_rms_window: 500
       local_rms: true
