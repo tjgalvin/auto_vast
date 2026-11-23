@@ -12,7 +12,33 @@
 
 # No partition specified: use the cluster's default compute partition.
 set -eo pipefail
-ENV=${1:?Usage: sbatch flint_compute_subtract.sh CONDA_ENV}
+# ENV=${1:?Usage: sbatch flint_compute_subtract.sh CONDA_ENV}
+ENV=${1:?Usage: sbatch flint_process_subtract.sh CONDA_ENV [SUBMISSION_EPOCH]}
+
+# The optional second argument includes queue and download time in the report.
+COMPUTE_STARTED_AT=$(date +%s)
+WORKFLOW_STARTED_AT=${2:-}
+if [[ -n "$WORKFLOW_STARTED_AT" && ! "$WORKFLOW_STARTED_AT" =~ ^[1-9][0-9]*$ ]]; then
+    echo "SUBMISSION_EPOCH must be a positive integer Unix timestamp" >&2
+    exit 1
+fi
+report_timing() {
+    local status=$?
+    local finished elapsed
+    finished=$(date +%s)
+    echo "Timing for SBID ${SBIDNUM:-unknown}, task ${SLURM_ARRAY_TASK_ID:-unknown}; exit status $status"
+    if [[ -n "$WORKFLOW_STARTED_AT" ]]; then
+        elapsed=$((finished - WORKFLOW_STARTED_AT))
+        printf 'Submission to completion (including queue and download): %dh %02dm %02ds\n' \
+            "$((elapsed / 3600))" "$((elapsed % 3600 / 60))" "$((elapsed % 60))"
+    fi
+    elapsed=$((finished - COMPUTE_STARTED_AT))
+    printf 'Compute job elapsed: %dh %02dm %02ds\n' \
+        "$((elapsed / 3600))" "$((elapsed % 3600 / 60))" "$((elapsed % 60))"
+    return "$status"
+}
+trap report_timing EXIT
+
 cd "${SLURM_SUBMIT_DIR:?Submit from your shared working directory}"
 export OMP_NUM_THREADS=1
 export APIURL=http://tones.it.csiro.au:4200/api
