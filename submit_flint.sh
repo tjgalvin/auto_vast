@@ -26,7 +26,6 @@ echo "Submitted download array: $download_id"
 if compute_id=$(sbatch --parsable \
     --array="$ARRAY" \
     --dependency="aftercorr:$download_id" \
-    # "$SCRIPT_DIR/flint_process_subtract.sh" "$ENV"); then
     "$SCRIPT_DIR/flint_process_subtract.sh" "$ENV" "$WORKFLOW_STARTED_AT"); then
 
     #"$SCRIPT_DIR/flint_process.sh" "$ENV"); then
