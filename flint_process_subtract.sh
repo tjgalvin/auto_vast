@@ -9,59 +9,13 @@
 #SBATCH -A OD-241659
 #SBATCH --array=1-1%1
 #SBATCH --output=flint_avast_process_subtract-%A_%a.out
+# Usage: sbatch flint_process_subtract.sh <conda env> [squash|conda] [submission epoch]
 
 # No partition specified: use the cluster's default compute partition.
 set -eo pipefail
-
-ENV=${1:?Usage: sbatch flint_process_subtract.sh CONDA_ENV [SUBMISSION_EPOCH]}
-
-# The optional second argument includes queue and download time in the report.
-COMPUTE_STARTED_AT=$(date +%s)
-WORKFLOW_STARTED_AT=${2:-}
-if [[ -n "$WORKFLOW_STARTED_AT" && ! "$WORKFLOW_STARTED_AT" =~ ^[1-9][0-9]*$ ]]; then
-    echo "SUBMISSION_EPOCH must be a positive integer Unix timestamp" >&2
-    exit 1
-fi
-report_timing() {
-    local status=$?
-    local finished elapsed
-    finished=$(date +%s)
-    echo "Timing for SBID ${SBIDNUM:-unknown}, task ${SLURM_ARRAY_TASK_ID:-unknown}; exit status $status"
-    if [[ -n "$WORKFLOW_STARTED_AT" ]]; then
-        elapsed=$((finished - WORKFLOW_STARTED_AT))
-        printf 'Submission to completion (including queue and download): %dh %02dm %02ds\n' \
-            "$((elapsed / 3600))" "$((elapsed % 3600 / 60))" "$((elapsed % 60))"
-    fi
-    elapsed=$((finished - COMPUTE_STARTED_AT))
-    printf 'Compute job elapsed: %dh %02dm %02ds\n' \
-        "$((elapsed / 3600))" "$((elapsed % 3600 / 60))" "$((elapsed % 60))"
-    return "$status"
-}
-trap report_timing EXIT
-
-
 cd "${SLURM_SUBMIT_DIR:?Submit from your shared working directory}"
-export OMP_NUM_THREADS=1
-export APIURL=http://tones.it.csiro.au:4200/api
-export PREFECT_API_URL="$APIURL"
-export WORKDIR="$PWD"
-export PREFECT_LOGGING_EXTRA_LOGGERS="flint,fixms"
-export PREFECT_LOGGING_LEVEL="INFO"
-export PREFECT_RESULTS_PERSIST_BY_DEFAULT=true
-export PREFECT_API_REQUEST_TIMEOUT=120
-export PREFECT_CLIENT_MAX_RETRIES=8
-export PREFECT_LOGGING_TO_API_BATCH_INTERVAL=10
-# As in the original script, conda must be initialized by your login setup.
-conda activate "$ENV"
+source ./flint_flow_env.sh "$@"
 
-SBIDNUM=$(sed -n "${SLURM_ARRAY_TASK_ID:?}p" sbids.txt)
-SBIDNUM=${SBIDNUM%$'\r'}
-if [[ ! "$SBIDNUM" =~ ^[0-9]+$ ]]; then
-    echo "Missing or invalid SBID at line $SLURM_ARRAY_TASK_ID" >&2
-    exit 1
-fi
-SBIDDIR="raw/$SBIDNUM"
-export PREFECT_HOME="$WORKDIR/prefect_${SBIDNUM}"
 if [[ ! -f "$SBIDDIR/.vis_download_complete" ]]; then
     echo "No successful download marker in $SBIDDIR" >&2
     exit 1

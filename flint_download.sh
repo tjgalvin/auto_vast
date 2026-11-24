@@ -10,21 +10,12 @@
 #SBATCH --array=1-1%1
 #SBATCH --partition=io
 #SBATCH --output=flint_avast_download-%A_%a.out
+# Usage: sbatch flint_download.sh <conda env> [squash|conda] [submission epoch]
 
 set -eo pipefail
-ENV=${1:?Usage: sbatch flint_download.sh CONDA_ENV}
 cd "${SLURM_SUBMIT_DIR:?Submit from your shared working directory}"
-export OMP_NUM_THREADS=1
-# As in the original script, conda must be initialized by your login setup.
-conda activate "$ENV"
+source ./flint_flow_env.sh "$@"
 
-SBIDNUM=$(sed -n "${SLURM_ARRAY_TASK_ID:?}p" sbids.txt)
-SBIDNUM=${SBIDNUM%$'\r'}
-if [[ ! "$SBIDNUM" =~ ^[0-9]+$ ]]; then
-    echo "Missing or invalid SBID at line $SLURM_ARRAY_TASK_ID" >&2
-    exit 1
-fi
-SBIDDIR="raw/$SBIDNUM"
 MARKER="$SBIDDIR/.vis_download_complete"
 
 if [[ -f "$MARKER" ]]; then

@@ -8,3 +8,8 @@
 /archive_copies/
 /flint_logs/
 
+
+# flint environments, as made by flint_env.sh, and per-SBID prefect homes
+flint_squash.sif
+flint_*/
+prefect_*/
