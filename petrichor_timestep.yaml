@@ -16,6 +16,12 @@ cluster_kwargs:
     # interface for the workers
     interface: "ib0"
     log_directory: 'flint_logs'
+    # Import dask_jobqueue as the worker starts, on its main thread, rather than
+    # while deserialising a large initial context, which triggers a worker bug.
+    # Drop once a release with the fix ships
+    worker_extra_args:
+      - "--preload"
+      - "dask_jobqueue"
     python: "${FLINT_PYTHON}"
     job_script_prologue:
         - "set -x"
