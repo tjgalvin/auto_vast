@@ -48,9 +48,13 @@ run from this checkout, where the configs also live.
 1. Work in this checkout on Petrichor. The run products (`raw/`,
    `archive_copies/`, `flint_logs/`, `prefect_*/`) are written here and are
    ignored by git.
-2. Have a conda environment with this (pre-eye-patch) flint and
-   `vis_download` installed. `flint_main` is the default name. conda must be
-   initialised by your login setup, as the sbatch scripts run `bash -l`.
+2. Have a conda environment with flint and `vis_download` installed.
+   `flint_main` is the default name. The configs need a flint with eye-patch v2
+   masking: flint main once PR
+   [#471](https://github.com/flint-crew/flint/pull/471) is merged, or its branch
+   until then (see [Testing a flint branch](#testing-a-flint-branch)). An older
+   `flint_main` must be updated first. conda must be initialised by your login
+   setup, as the sbatch scripts run `bash -l`.
 3. Check the paths and account for your setup:
    - the containers in `cli_config.config`, and `WSCLEAN` and `YANDA` in
      `flint_process_subtract.sh`
@@ -92,7 +96,12 @@ report the time since submission, including the queues and the download.
 - If download task N fails, compute task N never starts. It is left pending
   (`DependencyNeverSatisfied`); cancel it with `scancel`.
 - Compute jobs are not skipped when `archive_copies/<SBID>/` already exists.
-  Resubmitting the same lines runs them again.
+  Resubmitting the same lines runs them again, but flint refuses to start while
+  its output folder `<SBID>/` exists: remove it first.
+- If the continuum flow fails, the job stops before the subtraction.
+- Up to `--max-failed-intervals` (10, in `cli_config_timestep.config`) time steps
+  that fail are left out of the cube, and each is logged. More than that fails
+  the subtraction flow.
 - `prefect_<SBID>/` is only removed when the compute job succeeds.
 
 ## Running the steps by hand
@@ -144,10 +153,28 @@ FLINT_REPOS_DIR=/path/to/flint_repos ./flint_env.sh pack main
 | `relink`  | point `flint_squash.sif` here at the branch's squashfs      |
 | `delete`  | remove the environment and its directory                    |
 
-`install` and `update` pull the latest flint of the branch. `emu_deep.yaml` is
-written for a flint from before eye-patch, so do not run them on `flint_main`
-until the strategy has been updated. `pack` and `relink` leave flint alone.
+`install` and `update` pull the latest flint of the branch, so once
+[#471](https://github.com/flint-crew/flint/pull/471) is merged,
+`./flint_env.sh update main` brings `flint_main` up to date. `pack` and
+`relink` leave flint alone.
 
-For the same reason the `petrichor*.yaml` files have no `performance_report_dir`:
-that flint passes every key of a cluster config to `DaskTaskRunner`, which
-rejects it.
+## Testing a flint branch
+
+Each flint branch gets its own environment, `flint_<branch>`. To try the branch
+of PR [#471](https://github.com/flint-crew/flint/pull/471) before it is merged:
+
+```bash
+FLINT_REPOS_DIR=/path/to/flint_repos ./flint_env.sh create subtract-flow-robustness
+conda activate flint_subtract-flow-robustness
+pip install git+https://github.com/AlecThomson/vis-downloader   # the download job runs in this environment too
+flint_config verify emu_deep.yaml     # should report that it appears valid
+./submit_flint.sh 1-1 flint_subtract-flow-robustness
+```
+
+- `./flint_env.sh install subtract-flow-robustness` picks up later pushes to the
+  branch.
+- Verify the strategy before submitting. flint creates `<SBID>/` before it
+  checks the strategy, so a rejected strategy leaves it behind, and the next run
+  will not start until it is removed.
+- Each flow run writes its dask performance report to
+  `flint_logs/dask-performance-report-<flow run>.html`.
