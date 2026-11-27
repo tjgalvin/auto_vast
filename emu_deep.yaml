@@ -81,11 +81,6 @@ defaults:
     - 128
     - 196
     beam_shape_erode_scales_as_fwhm: true # more aggresive erosion
-    # Make each scale's mask from the image convolved to the scale: seed and flood
-    # fill it with the minimum absolute clip, then erode it by the beam at the scale.
-    # flood_clip is raised to at least 0.8 at scale 0, and mac_box_size grows by
-    # each scale. base_clip, flood_fill, use_mac, beam_shape_erode and
-    # grow_low_snr_island are not used
     convolve_first: true
     grow_low_snr_island: false
     grow_low_snr_island_clip: 1.75
