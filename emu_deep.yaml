@@ -99,6 +99,7 @@ selfcal:
     wsclean: 
       auto_mask: 6
       auto_threshold: 3
+      gain: 0.5
       multiscale_scale_bias: 0.8
       multiscale: false
       niter: 50000
@@ -108,6 +109,7 @@ selfcal:
     wsclean:
       auto_mask: null
       auto_threshold: 2
+      gain: 0.5
       #force_mask_rounds: null
       local_rms_window: 500
       local_rms: true
@@ -126,6 +128,7 @@ selfcal:
     wsclean:
       auto_mask: null
       auto_threshold: 2
+      gain: 0.5
       #force_mask_rounds: null
       local_rms: true
       local_rms_window: 500
@@ -143,6 +146,7 @@ selfcal:
     wsclean:
       auto_mask: null
       auto_threshold: 2
+      gain: 0.5
       #force_mask_rounds: null
       local_rms: false
       local_rms_window: null
@@ -163,6 +167,7 @@ selfcal:
     wsclean:
       auto_mask: null
       auto_threshold: 1.5
+      gain: 0.5
       #force_mask_rounds: null 
       local_rms: false
       local_rms_window: null
